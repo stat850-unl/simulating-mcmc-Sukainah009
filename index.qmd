@@ -1,6 +1,6 @@
 ---
 title: "Monte Carlo Simulation"
-author: "Your name"
+author: "Sukainah "
 format: html
 ---
 
@@ -36,12 +36,90 @@ The distance between the origin and the end of the chain $(x,y,z)$ can be calcul
 
 Write a function that takes $n$ and returns the distance between the start and end points of a chain. 
 Use vector-based operations to increase the efficiency of your function.
+```{r}
+
+polymerchain <- function(n) {
+
+  
+  # theta and phi angles
+  theta <- runif(n, 0, 2 * pi)  
+  phi <- runif(n, 0, pi)        
+  
+  # 3d component for each link
+  the_x <- cos(theta) * sin(phi)
+  the_y <- sin(theta) * sin(phi)
+  the_z <- cos(phi)
+  
+  # sum x,y and z components togather
+  x <- sum(the_x)
+  y <- sum(the_y)
+  z <- sum(the_z)
+  
+  # Calc end to end distance R
+  R <- sqrt(x^2 + y^2 + z^2)
+  
+  return(R)
+}
+
+
+
+
+
+
+
+
+```
 
 
 ## Distribution of Unconstrained Links
 
 Simulate 10000 chains and save the distribution of the end-to-end distance.
 
+```{r}
+
+
+# 
+polymerchain <- function(n) {
+  # vector starting (0,0,0)
+  all_x <- 0
+  all_y <- 0
+  all_z <- 0
+  
+  # link togather
+  for(i in 1:n) {
+    # angles :theta+phi
+    theta <- runif(1, 0, 2 * pi)
+    phi <- runif(1, 0, pi)
+    
+    # calc link's direction
+    the_x <- cos(theta) * sin(phi)
+  the_y <- sin(theta) * sin(phi)
+  the_z <- cos(phi)
+    
+    # Add to total position
+    all_x <- all_x + the_x
+    all_y <- all_y + the_y
+    all_z <- all_z + the_z
+  }
+  
+  # calc final distanation
+  distance <- sqrt(all_x^2 + all_y^2 + all_z^2)
+  return(distance)
+}
+
+#  simulation
+set.seed(523582)  
+
+# Simulate 10000 chains
+results <- numeric(10000)  
+
+for(i in 1:10000) {
+  results[i] <- polymerchain(100)
+}
+
+
+
+```
 
 
 # Constrained Polymer Chains
@@ -55,6 +133,10 @@ We can do this by checking the angle between adjacent links after choosing a ran
 
 Write a function that takes $n$ and returns the distance between the start and end points of a chain. 
 Can you think of a way to use vectorized functions to accomplish this task? Why or why not? 
+
+```{r}
+
+```
 
 ## Distribution of Constrained Links
 
